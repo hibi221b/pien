@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ぴえん</title>
+    <script src="https://unpkg.com/zdog@1/dist/zdog.dist.min.js"></script>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            display: table;
+        }
+
+        body {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <canvas width="240" height="240" class="zdog-canvas"></canvas>
+    <script>
+        const illo = new Zdog.Illustration({
+            element: '.zdog-canvas',
+            zoom: 15, 
+            dragRotate: true
+        });
+
+        let head = new Zdog.Shape({
+            addTo: illo,
+            stroke: 12,
+            color: "#FFEB3B"
+        });
+
+        let eye = new Zdog.Ellipse({
+            addTo: head,
+            width: 3,
+            height: 3,
+            fill: true,
+            translate: { x: -2.2, y: -1, z: 4.5},
+            color: "black",
+            stroke: 1,
+        });
+
+        eye.copy({
+            translate: { x: 2.2, y: -1, z: 4.5 },
+        });
+
+        let eyeWhite = new Zdog.Ellipse({
+            addTo: head,
+            width: 1.5,
+            height: 1.7,
+            fill: true,
+            color: "white",
+            translate: {x: -2.5, y: -1.5, z: 5},
+            stroke: 0.5,
+            rotate: {z: Zdog.TAU/6}
+        });
+
+        eyeWhite.copy({
+            translate: {x: 1.9, y: -1.5, z: 5}
+        });
+
+        let eyeSmoll = eyeWhite.copy({
+            width: 0.2,
+            height: 0.4,
+            translate: {x: -1.4, y: -0.1, z: 5},
+        });
+
+        eyeSmoll.copy({
+            translate: {x: 3, y: -0.1, z: 5}
+        });
+
+
+        let eyeBrow = new Zdog.Shape({
+            addTo: head,
+            path: [
+                {x: 0, y: 0},
+                {
+                    arc: [
+                        {x: -2, y: 0},
+                        {x: -2, y: 1}
+                    ]
+                }
+            ],
+            translate: {x: -3.8, y: -3.2, z: 4.5},
+            rotate: {z: Zdog.TAU/2},
+            closed: false,
+            stroke: 0.3,
+            color: "black"
+        });
+
+        eyeBrow.copy({
+            translate: {x: 3.8, y: -3.2, z: 4.5},
+            path: [
+                {x: 0, y: 0},
+                {
+                    arc: [
+                        {x: 2, y: 0},
+                        {x: 2, y: 1}
+                    ]
+                }
+            ]
+        });
+
+        let mouth = new Zdog.Shape({
+            addTo: head,
+            path: [
+                {x: -1, y: 1},
+                {
+                    arc: [
+                        {x: 0, y: 0},
+                        {x: 1, y: 1}
+                    ]
+                }
+            ],
+            closed: false,
+            stroke: 0.5,
+            color: "black",
+            translate: {x: 0, y: 2, z: 4.5}
+        });
+
+        const animate = () => {
+            illo.rotate.y += 0.005;
+            illo.rotate.x += 0.005;
+            illo.updateRenderGraph();
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
